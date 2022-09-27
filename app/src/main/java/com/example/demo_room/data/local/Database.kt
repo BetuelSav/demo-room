@@ -9,4 +9,8 @@ import com.example.demo_room.data.local.entities.Note
 abstract class Database: RoomDatabase() {
 
     abstract fun noteDao() : NoteDao
+
+    companion object{
+        const val DATABASE_NAME = "database_name"
+    }
 }
