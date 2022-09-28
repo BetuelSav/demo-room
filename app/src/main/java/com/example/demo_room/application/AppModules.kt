@@ -4,6 +4,10 @@ import androidx.room.Room
 import com.example.demo_room.data.local.Database
 import com.example.demo_room.data.local.repository.NoteRepositoryImplementation
 import com.example.demo_room.domain.repository.NoteRepository
+import com.example.demo_room.domain.use_case.AddNoteUseCase
+import com.example.demo_room.domain.use_case.DeleteNoteUseCase
+import com.example.demo_room.domain.use_case.GetAllNotesUseCase
+import com.example.demo_room.domain.use_case.GetNoteByIdUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -14,7 +18,10 @@ object AppModules {
     }
 
     private val useCases = module {
-
+        single { AddNoteUseCase(get()) }
+        single { DeleteNoteUseCase(get()) }
+        single { GetAllNotesUseCase(get()) }
+        single { GetNoteByIdUseCase(get()) }
     }
 
     private val localRepositoryModule = module {
