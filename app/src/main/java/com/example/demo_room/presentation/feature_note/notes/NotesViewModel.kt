@@ -2,8 +2,10 @@ package com.example.demo_room.presentation.feature_note.notes
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.demo_room.R
 import com.example.demo_room.data.local.entities.Note
 import com.example.demo_room.domain.use_case.AddNoteUseCase
 import com.example.demo_room.domain.use_case.DeleteNoteUseCase
@@ -32,6 +34,19 @@ class NotesViewModel(
 
     init {
         getNotes(NoteSort.Date(OrderSort.DESCENDING))
+        //create mock data
+//        viewModelScope.launch {
+//            for (i in 1..10) {
+//                addNoteUseCase(
+//                    Note(
+//                        title = "Mock title $i",
+//                        content = "Mock description $i \n nock new line \n mock new line",
+//                        timestamp = 0L,
+//                        color = R.color.purple_700
+//                    )
+//                )
+//            }
+//        }
     }
 
     fun onEvent(event: NotesEvent) {
