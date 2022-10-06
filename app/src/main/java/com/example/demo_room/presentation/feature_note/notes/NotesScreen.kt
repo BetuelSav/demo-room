@@ -42,6 +42,7 @@ import com.example.demo_room.R
 import com.example.demo_room.presentation.feature_note.notes.components.NoteItem
 import com.example.demo_room.presentation.feature_note.notes.components.SortSection
 import com.example.demo_room.presentation.feature_note.notes.util.NotesEvent
+import com.example.demo_room.presentation.util.Screen
 import com.example.demo_room.ui.theme.DarkGray
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -59,7 +60,7 @@ fun NotesScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = { navController.navigate(Screen.AddEditNoteScreen.route) },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(
