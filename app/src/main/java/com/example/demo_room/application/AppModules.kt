@@ -8,13 +8,14 @@ import com.example.demo_room.domain.use_case.AddNoteUseCase
 import com.example.demo_room.domain.use_case.DeleteNoteUseCase
 import com.example.demo_room.domain.use_case.GetAllNotesUseCase
 import com.example.demo_room.domain.use_case.GetNoteByIdUseCase
+import com.example.demo_room.presentation.feature_note.notes.NotesViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 object AppModules {
 
     private val viewModels = module {
-
+        single { NotesViewModel(get(), get(), get()) }
     }
 
     private val useCases = module {

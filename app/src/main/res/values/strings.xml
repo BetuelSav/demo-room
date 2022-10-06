@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">demo-room</string>
+    <string name="notes_title">Your notes</string>
+    <string name="sort_title">Title</string>
+    <string name="sort_date">Date</string>
+    <string name="sort_color">Color</string>
+    <string name="sort_ascending">Ascending</string>
+    <string name="sort_descending">Descending</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="undo">Undo</string>
 </resources>
