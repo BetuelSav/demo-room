@@ -37,7 +37,7 @@ fun NoteItem(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(color = colorResource(id = note.color)),
+            .background(color = Color(note.color)),
     ) {
         Column(
             modifier = Modifier
