@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
-import com.example.demo_room.presentation.util.MainNavHostGraph
+import com.example.demo_room.presentation.feature_note.NavGraphs
 import com.example.demo_room.ui.theme.DemoroomTheme
+import com.ramcosta.composedestinations.DestinationsNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DemoroomTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    val navController = rememberNavController()
-                    MainNavHostGraph(navController)
+                    DestinationsNavHost(navGraph = NavGraphs.root)
                 }
             }
         }

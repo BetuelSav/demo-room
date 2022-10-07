@@ -32,24 +32,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.demo_room.R
+import com.example.demo_room.presentation.feature_note.destinations.AddEditNoteScreenDestination
 import com.example.demo_room.presentation.feature_note.notes.components.NoteItem
 import com.example.demo_room.presentation.feature_note.notes.components.SortSection
 import com.example.demo_room.presentation.feature_note.notes.util.NotesEvent
-import com.example.demo_room.presentation.util.Screen
-import com.example.demo_room.ui.theme.DarkGray
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@Destination(start = true)
 @Composable
 fun NotesScreen(
-    navController: NavController,
+    navigator: DestinationsNavigator,
     viewModel: NotesViewModel = getViewModel(),
 ) {
     val state = viewModel.state.value
@@ -60,7 +59,7 @@ fun NotesScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(Screen.AddEditNoteScreen.route) },
+                onClick = { navigator.navigate(AddEditNoteScreenDestination()) },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(
@@ -119,8 +118,10 @@ fun NotesScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                navController.navigate(Screen.AddEditNoteScreen.route +
-                                        "?${Screen.ARG_NOTE_ID}=${note.id}&${Screen.ARG_NOTE_COLOR}=${note.color}"
+                                navigator.navigate(
+                                    AddEditNoteScreenDestination(
+                                        noteId = note.id,
+                                        noteColor = note.color)
                                 )
                             },
                         onDeleteClick = {

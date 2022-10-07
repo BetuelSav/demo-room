@@ -21,8 +21,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,16 +30,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.demo_room.R
 import com.example.demo_room.data.local.entities.Note
 import com.example.demo_room.presentation.feature_note.add_edit_note.components.TextFieldWithHint
 import com.example.demo_room.presentation.feature_note.add_edit_note.util.AddEditNoteEvent
 import com.example.demo_room.ui.theme.DarkGray
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -49,17 +47,18 @@ import org.koin.core.parameter.parametersOf
 
 const val BACKGROUND_COLOR_ANIMATION_DURATION = 500
 
+@Destination
 @Composable
 fun AddEditNoteScreen(
-    navController: NavController,
-    noteId: String? = null,
-    noteColor: String? = null,
+    navigator: DestinationsNavigator,
+    noteId: Int?=null,
+    noteColor: Int?=null,
     viewModel: AddEditNoteViewModel = getViewModel() { parametersOf(noteId, noteColor) },
 ) {
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
     val scaffoldState = rememberScaffoldState()
-    val noteBackgroundAnimate = remember { Animatable(Color(noteColor?.toIntOrNull() ?: viewModel.noteColor.value)) }
+    val noteBackgroundAnimate = remember { Animatable(Color(noteColor ?: viewModel.noteColor.value)) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
@@ -70,7 +69,7 @@ fun AddEditNoteScreen(
                         message = event.message,
                         duration = SnackbarDuration.Short
                     )
-                is AddEditNoteViewModel.UiEvent.SaveNote -> navController.navigateUp()
+                is AddEditNoteViewModel.UiEvent.SaveNote -> navigator.navigateUp()
             }
         }
     }

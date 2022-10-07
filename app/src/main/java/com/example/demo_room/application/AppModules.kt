@@ -17,7 +17,7 @@ object AppModules {
 
     private val viewModels = module {
         single { NotesViewModel(get(), get(), get()) }
-        factory { (noteId: String?, noteColor: String?) -> AddEditNoteViewModel(get(), get(), noteId, noteColor) }
+        factory { (noteId: Int?) -> AddEditNoteViewModel(get(), get(), noteId) }
     }
 
     private val useCases = module {

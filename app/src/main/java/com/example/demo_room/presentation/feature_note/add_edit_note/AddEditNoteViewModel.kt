@@ -21,8 +21,7 @@ const val ERROR_NOTE_NOT_SAVED = "Couldn't save note"
 class AddEditNoteViewModel(
     private val getNoteByIdUseCase: GetNoteByIdUseCase,
     private val addNoteUseCase: AddNoteUseCase,
-    noteId: String?,
-    noteColor: String?,
+    noteId: Int?,
 ) : ViewModel() {
 
     private val _noteTitle = mutableStateOf(NoteTextFieldState(hint = R.string.title_hint))
@@ -41,7 +40,7 @@ class AddEditNoteViewModel(
     private var currentNoteId: Int? = null
 
     init {
-        currentNoteId = noteId?.toIntOrNull()
+        currentNoteId = noteId
         getCurrentNote()
     }
 
