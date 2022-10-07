@@ -118,7 +118,11 @@ fun NotesScreen(
                         note = note,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { },
+                            .clickable {
+                                navController.navigate(Screen.AddEditNoteScreen.route +
+                                        "?${Screen.ARG_NOTE_ID}=${note.id}&${Screen.ARG_NOTE_COLOR}=${note.color}"
+                                )
+                            },
                         onDeleteClick = {
                             viewModel.onEvent(NotesEvent.DeleteNote(note))
                             scope.launch {

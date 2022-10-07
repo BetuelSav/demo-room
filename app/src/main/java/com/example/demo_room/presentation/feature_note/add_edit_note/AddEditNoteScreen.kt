@@ -45,18 +45,21 @@ import com.example.demo_room.ui.theme.DarkGray
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 const val BACKGROUND_COLOR_ANIMATION_DURATION = 500
 
 @Composable
 fun AddEditNoteScreen(
     navController: NavController,
-    viewModel: AddEditNoteViewModel = getViewModel(),
+    noteId: String? = null,
+    noteColor: String? = null,
+    viewModel: AddEditNoteViewModel = getViewModel() { parametersOf(noteId, noteColor) },
 ) {
     val titleState = viewModel.noteTitle.value
     val contentState = viewModel.noteContent.value
     val scaffoldState = rememberScaffoldState()
-    val noteBackgroundAnimate = remember { Animatable(Color(viewModel.noteColor.value)) }
+    val noteBackgroundAnimate = remember { Animatable(Color(noteColor?.toIntOrNull() ?: viewModel.noteColor.value)) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {

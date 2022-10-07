@@ -21,6 +21,8 @@ const val ERROR_NOTE_NOT_SAVED = "Couldn't save note"
 class AddEditNoteViewModel(
     private val getNoteByIdUseCase: GetNoteByIdUseCase,
     private val addNoteUseCase: AddNoteUseCase,
+    noteId: String?,
+    noteColor: String?,
 ) : ViewModel() {
 
     private val _noteTitle = mutableStateOf(NoteTextFieldState(hint = R.string.title_hint))
@@ -37,6 +39,11 @@ class AddEditNoteViewModel(
     val eventFlow: SharedFlow<UiEvent> = _eventFlow
 
     private var currentNoteId: Int? = null
+
+    init {
+        currentNoteId = noteId?.toIntOrNull()
+        getCurrentNote()
+    }
 
     fun onEvent(event: AddEditNoteEvent) {
         when (event) {
@@ -65,9 +72,27 @@ class AddEditNoteViewModel(
                     _eventFlow.emit(UiEvent.ShowSnackbar(e.message ?: ERROR_NOTE_NOT_SAVED))
                 }
             }
-
         }
     }
+
+    private fun getCurrentNote() {
+        currentNoteId?.let { id ->
+            viewModelScope.launch {
+                getNoteByIdUseCase(id)?.let { note ->
+                    _noteTitle.value = noteTitle.value.copy(
+                        text = note.title,
+                        isHintVisible = false
+                    )
+                    _noteContent.value = noteContent.value.copy(
+                        text = note.content,
+                        isHintVisible = false
+                    )
+                    _noteColor.value = note.color
+                }
+            }
+        }
+    }
+
 
     sealed class UiEvent {
         data class ShowSnackbar(val message: String) : UiEvent()
